@@ -1,0 +1,41 @@
+
+services:
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer
+    restart: unless-stopped
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./volumes/portainer/data:/data
+
+  wordpress:
+    container_name: wordpress
+    build: ./services/wordpress/.
+    restart: unless-stopped
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: exologdbhost
+      WORDPRESS_DB_USER: exologdbuser
+      WORDPRESS_DB_PASSWORD: k3D2g8cDeC20FDc&sd92w
+      WORDPRESS_DB_NAME: exologdb
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: exologdb
+      MYSQL_USER: exologdbuser
+      MYSQL_PASSWORD: k3D2g8cDeC20FDc&sd92w
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress:
+  db:
