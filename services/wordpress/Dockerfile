@@ -112,11 +112,12 @@ RUN { \
 		echo 'memory_limit = 256M'; \
 	} > /usr/local/etc/php/conf.d/php.ini
 
+COPY wordpress-6.5.2.tar.gz wordpress.tar.gz
 RUN set -eux; \
 	version='6.5.2'; \
 	sha1='b70701b5426891ca1f8ff9b3cd96653e2b60d7e9'; \
 	\
-	curl -o wordpress.tar.gz -fL "https://wordpress.org/wordpress-$version.tar.gz"; \
+	#curl -o wordpress.tar.gz -fL "https://wordpress.org/wordpress-$version.tar.gz"; \
 	echo "$sha1 *wordpress.tar.gz" | sha1sum -c -; \
 	\
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
